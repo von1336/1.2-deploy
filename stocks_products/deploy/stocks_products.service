@@ -1,0 +1,15 @@
+[Unit]
+Description=Stocks Products Gunicorn
+After=network.target postgresql.service
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/stocks_products
+Environment="PATH=/opt/stocks_products/venv/bin"
+EnvironmentFile=/opt/stocks_products/.env
+ExecStart=/opt/stocks_products/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 stocks_products.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
